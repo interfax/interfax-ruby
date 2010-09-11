@@ -117,15 +117,3 @@ module Interfax
   end
 
 end
-
-
-# 
-# aa = OrderFax.new(:html).contains("<h1>test</h1>").subject("yes").to("+49236189013699")
-# aa.summary
-# aa.deliver
-# 
-# OrderFax.all
-# OrderFax.find(173581304)
-# 
-# 
-
