@@ -1,0 +1,131 @@
+
+module Interfax
+
+  class Base
+    
+    # Class methods
+    
+    class << self
+      attr_accessor :username, :password
+
+      def query(verb,verbdata,limit=-1)
+        result = SOAP::WSDLDriverFactory.new("http://ws.interfax.net/dfs.asmx?WSDL").create_rpc_driver.FaxQuery(
+          :Username => self.username,
+          :Password => self.password,
+          :Verb => verb,
+          :VerbData => verbdata,
+          :MaxItems => limit,
+          :ResultCode => 0
+        )
+        return [] if result.nil? || !defined?(result.faxQueryResult)
+        [*result.faxQueryResult.faxItemEx].map do |f| 
+          FaxItem.new(
+            f.transactionID,
+            Time.parse(f.submitTime),
+            Time.parse(f.postponeTime),
+            f.destinationFax,
+            f.duration,
+            f.remoteCSID,
+            f.pagesSent,
+            f.status,
+            f.subject,
+            f.pagesSubmitted)
+        end  
+      end
+      
+      def find(*args)
+        query("IN", args.join(','))
+      end
+
+      def last(limit=1)
+        query("LE","999999999",limit)
+      end
+      
+      def all()
+        query("LE","999999999")
+      end
+
+    end
+
+    # Instance methods
+
+    def initialize(type="HTML",content=nil)
+      @username = self.class.username
+      @password = self.class.password
+      @type = type.to_s.upcase
+      @content = content
+      @at = Time.now
+      @recipients = nil
+      @subject = "Change me"
+      @retries = "0"
+    end
+    
+    def contains(content)
+      @content = content
+      self
+    end
+    
+    def to(recipients)
+      @recipients = [*recipients].join(";")
+      self
+    end
+    
+    def subject(subject)
+      @subject = subject
+      self
+    end
+    
+    def retries(count)
+      @retries = count.to_s
+      self
+    end
+    
+    def at(time)
+      @at = time
+      self
+    end
+    
+    def summary
+      { 
+        :fax_numbers => @recipients, 
+        :content => @content,
+        :at => @at,
+        :retries => @retries,
+        :subject => @subject,
+        :username => @username
+      }
+    end
+    
+    def deliver
+      SOAP::WSDLDriverFactory.new("http://ws.interfax.net/dfs.asmx?WSDL").create_rpc_driver.SendfaxEx_2(
+        :Username => @username,
+        :Password => @password,
+        :FileTypes => @type,
+        :Postpone => @at,
+        :RetriesToPerform => @retries,
+        :FaxNumbers=> @recipients,
+        :FilesData => @content,
+        :FileSizes => @content.size,
+        :Subject => @subject,
+        :PageSize => 'A4',
+        :PageOrientation => 'Portrait',
+        :IsHighResolution => 'true',
+        :IsFineRendering => 'false'
+      )
+    end
+    
+  end
+
+end
+
+
+# 
+# aa = OrderFax.new(:html).contains("<h1>test</h1>").subject("yes").to("+49236189013699")
+# aa.summary
+# aa.deliver
+# 
+# OrderFax.all
+# OrderFax.find(173581304)
+# 
+# 
+
