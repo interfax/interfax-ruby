@@ -5,7 +5,11 @@ querying is supported.
 
 If you're willing to help, just drop me a line.
 
-## Example
+## Installation
+
+    gem install interfax
+
+## Usage
 
 Create a class, inherit from Interfax::Base and set authentication parameters:
 
