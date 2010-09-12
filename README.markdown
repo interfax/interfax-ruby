@@ -5,7 +5,17 @@ querying is supported.
 
 If you're willing to help, just drop me a line.
 
-## Sending
+## Example
+
+Create a class, inherit from Interfax::Base and set authentication parameters:
+
+    class OrderFax < Interfax::Base
+      self.username = "my_interfax_username"
+      self.password = "my_interfax_password"
+    end
+
+
+### Sending
 
 Creating a fax:
 
@@ -23,7 +33,7 @@ Finally:
 
     result_id = fax.deliver
 
-## Querying
+### Querying
 
 To get all faxes:
 
