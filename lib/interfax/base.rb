@@ -97,7 +97,7 @@ module Interfax
     end
     
     def deliver
-      SOAP::WSDLDriverFactory.new("http://ws.interfax.net/dfs.asmx?WSDL").create_rpc_driver.SendfaxEx_2(
+      result = SOAP::WSDLDriverFactory.new("http://ws.interfax.net/dfs.asmx?WSDL").create_rpc_driver.SendfaxEx_2(
         :Username => @username,
         :Password => @password,
         :FileTypes => @type,
@@ -112,6 +112,7 @@ module Interfax
         :IsHighResolution => 'true',
         :IsFineRendering => 'false'
       )
+      result ? result.sendfaxEx_2Result : nil
     end
     
   end
