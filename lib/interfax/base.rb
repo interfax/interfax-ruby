@@ -9,7 +9,7 @@ module Interfax
       attr_accessor :username, :password
 
       def query(verb,verbdata,limit=-1)
-        result = SOAP::WSDLDriverFactory.new("http://ws.interfax.net/dfs.asmx?WSDL").create_rpc_driver.FaxQuery(
+        result = SOAP::WSDLDriverFactory.new("https://ws.interfax.net/dfs.asmx?WSDL").create_rpc_driver.FaxQuery(
           :Username => self.username,
           :Password => self.password,
           :Verb => verb,
@@ -97,7 +97,7 @@ module Interfax
     end
     
     def deliver
-      result = SOAP::WSDLDriverFactory.new("http://ws.interfax.net/dfs.asmx?WSDL").create_rpc_driver.SendfaxEx_2(
+      result = SOAP::WSDLDriverFactory.new("https://ws.interfax.net/dfs.asmx?WSDL").create_rpc_driver.SendfaxEx_2(
         :Username => @username,
         :Password => @password,
         :FileTypes => @type,
