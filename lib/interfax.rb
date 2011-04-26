@@ -6,3 +6,4 @@ $:.unshift(File.dirname(__FILE__)) unless
 
 require 'interfax/fax_item'
 require 'interfax/base'
+require 'interfax/incoming'
