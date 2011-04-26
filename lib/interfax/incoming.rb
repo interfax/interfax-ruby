@@ -20,6 +20,22 @@ module Interfax
         result.objMessageItem.messageItem
       end
 
+      def all(opts = {})
+        query('AllMessages', opts)
+      end
+
+      def new(opts = {})
+        query('NewMessages', opts)
+      end
+
+      def account_all(opts = {})
+        query('AccountAllMessages', opts)
+      end
+
+      def account_new(opts = {})
+        query('AccountNewMessages', opts)
+      end
+
     end
 
   end
