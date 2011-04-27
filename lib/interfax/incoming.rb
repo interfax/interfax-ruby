@@ -7,12 +7,15 @@ module Interfax
     
     class << self
       attr_accessor :username, :password, :mark_as_read, :limit
+
+      def soap_client #:nodoc:
+        SOAP::WSDLDriverFactory.
+          new("https://ws.interfax.net/inbound.asmx?WSDL").
+          create_rpc_driver
+      end
       
       def query(type, opts = {})
-        result = SOAP::WSDLDriverFactory.
-          new("https://ws.interfax.net/inbound.asmx?WSDL").
-          create_rpc_driver.
-          GetList(:Username => self.username,
+        result = self.soap_client.GetList(:Username => self.username,
                   :Password => self.password,
                   :MaxItems => opts[:MaxItems] || self.limit || 100,
                   :MarkAsRead => opts[:MarkAsRead] || self.mark_as_read || false,
@@ -67,14 +70,12 @@ module Interfax
       @image = ""
       downloaded_size = 0
       while downloaded_size < @message_size
-        result = SOAP::WSDLDriverFactory.new("https://ws.interfax.net/inbound.asmx?WSDL").
-          create_rpc_driver.
-          GetImageChunk(:Username => @username,
-                        :Password => @password,
-                        :MessageID => @message_id,
-                        :MarkAsRead => @mark_as_read,
-                        :ChunkSize => @chunk_size,
-                        :From => downloaded_size)
+        result = self.class.soap_client.GetImageChunk(:Username => @username,
+                                                :Password => @password,
+                                                :MessageID => @message_id,
+                                                :MarkAsRead => @mark_as_read,
+                                                :ChunkSize => @chunk_size,
+                                                :From => downloaded_size)
 
         @image << Base64.decode64(result.image)
         downloaded_size += @chunk_size
