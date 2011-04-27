@@ -77,9 +77,14 @@ module Interfax
                                                 :ChunkSize => @chunk_size,
                                                 :From => downloaded_size)
 
-        @image << Base64.decode64(result.image)
+        # TODO: Make this throw a nicer exception on failure
+        if defined?(result.image)
+          @image << Base64.decode64(result.image)
+        end
         downloaded_size += @chunk_size
+
       end
+      
       @image
     end
 
