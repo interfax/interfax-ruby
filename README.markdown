@@ -91,13 +91,13 @@ authentication info handy -- you can do so:
 
 There are four methods for fetching incoming faxes:
 
-    all - Fetch all incoming faxes 
-    unread - Fetch unread incoming faxes
-    account_all - Fetch incoming faxes for all users on your account
-    account_unread - Fetch unread incoming faxes for all users on your account
+    #all               - Fetch all incoming faxes 
+    #unread            - Fetch unread incoming faxes
+    #account_all       - Fetch incoming faxes for all users on your account
+    #account_unread    - Fetch unread incoming faxes for all users on your account
 
-    The account_ methods require that you have admin privileges. For
-    more information, see the Interfax API documentation.
+The account_ methods require that you have admin privileges. For more
+information, see the Interfax API documentation.
 
 
 #### Getting Incoming Fax Images
