@@ -17,8 +17,8 @@ module Interfax
       def query(type, opts = {})
         result = self.soap_client.GetList(:Username => self.username,
                   :Password => self.password,
-                  :MaxItems => opts[:MaxItems] || self.limit || 100,
-                  :MarkAsRead => opts[:MarkAsRead] || self.mark_as_read || false,
+                  :MaxItems => opts[:limit] || self.limit || 100,
+                  :MarkAsRead => opts[:mark_as_read] || self.mark_as_read || false,
                   :LType => type
                   )
         
