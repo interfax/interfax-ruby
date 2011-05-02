@@ -93,7 +93,7 @@ module Interfax
         
         return [] if result.nil? || !defined?(result.objMessageItem)
         [*result.objMessageItem.messageItem].map do |fax|
-          self.new(fax.messageID, fax.messageSize)
+          self.new(fax)
         end
       end
 
@@ -157,17 +157,36 @@ module Interfax
       
     end
 
+    # class methods
 
-
-    attr_accessor :username, :password, :mark_as_read, :chunk_size, :message_id, :message_size, :image #:nodoc:
+    attr_accessor :username, :password, :mark_as_read, :chunk_size, :message_id, :message_size, :image,
+      :interfax_number, :remote_csid, :message_status, :pages, :message_type, :receieve_time, :caller_id, 
+      :duration
     
-    def initialize(message_id, message_size)
+    # Normally this is instantied for you as a result of calling one of the
+    # querying class methods. If you want to instantiate an object yourself,
+    # you can pass it the results of the GetList API call, or any object that
+    # looks like it.
+    # See: http://www.interfax.net/en/dev/webservice/reference/getlist
+    def initialize(params = nil)
       @username = self.class.username
       @password = self.class.password
       @mark_as_read = self.class.mark_as_read || false
       @chunk_size = 100000
-      @message_id = message_id
-      @message_size = message_size.to_i
+
+      unless params.nil?
+        @message_id = params.messageID
+        @message_size = params.messageSize.to_i
+        @interfax_number = params.phoneNumber
+        @remote_csid = params.remoteCSID
+        @message_status = params.messageStatus
+        @pages = params.pages
+        @message_type = params.messageType
+        @receive_time = params.receiveTime
+        @caller_id = params.callerID
+        @duration = params.messageRecordingDuration
+      end
+      
       @image = nil
     end
 

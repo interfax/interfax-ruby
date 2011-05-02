@@ -79,7 +79,8 @@ describe Interfax::Incoming do
   context "fetching images" do
 
     before(:each) do 
-      @fax = Interfax::Incoming.new('message_id', '200000')
+      details = mock_getlist_response.objMessageItem.messageItem[0]
+      @fax = Interfax::Incoming.new(details)
     end
 
     it "should fetch the image when asked" do
