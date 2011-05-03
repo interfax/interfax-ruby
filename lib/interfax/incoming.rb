@@ -160,7 +160,7 @@ module Interfax
     # class methods
 
     attr_accessor :username, :password, :mark_as_read, :chunk_size, :message_id, :message_size, :image,
-      :interfax_number, :remote_csid, :message_status, :pages, :message_type, :receieve_time, :caller_id, 
+      :interfax_number, :remote_csid, :message_status, :pages, :message_type, :receive_time, :caller_id, 
       :duration
     
     # Normally this is instantied for you as a result of calling one of the
