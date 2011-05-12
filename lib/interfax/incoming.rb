@@ -1,5 +1,5 @@
 require 'soap/wsdlDriver'
-require 'Base64'
+require 'base64'
 
 module Interfax
 
