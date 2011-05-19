@@ -18,6 +18,3 @@ coverage
 rdoc
 doc/
 pkg
-
-## PROJECT::SPECIFIC
-*.gemspec
