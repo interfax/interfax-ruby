@@ -3,7 +3,7 @@
 This library is a wrapper for the interfax.net fax service. For now,
 you can do the following:
 
-* Send HTML faxes
+* Send HTML/PDF faxes
 * Query the status of a sent fax
 * Retrieve a list of incoming faxes
 * Get the image for a sent fax
@@ -28,9 +28,15 @@ Create a class, inherit from Interfax::Base and set authentication parameters:
 
 #### Sending Faxes
 
-Creating a fax:
+Creating a fax is simple regardless of if you're sending PDF or HTML content:
+
+Creating an HTML fax:
 
     fax = OrderFax.new(:html).contains("<h1>test</h1>").subject("test").to("+4923456123456")
+
+Creating a PDF fax:
+
+    fax = OrderFax.new(:pdf).contains(File.read('/files/document.pdf').subject("test").to("+4923456123456")
 
 It is possible to specify more than one receipent:
 
