@@ -14,6 +14,9 @@ If you're willing to help, just drop me a line.
 
     gem install interfax
 
+**Compatibility Notice**: Interfax.rb currently only works under Ruby 1.8, as it's 
+based on SOAP libraries that do not ship with Ruby 1.9 and up. 
+
 ## Usage
 
 ### Outgoing Faxes
