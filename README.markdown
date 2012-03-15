@@ -39,7 +39,11 @@ Creating an HTML fax:
 
 Creating a PDF fax:
 
-    fax = OrderFax.new(:pdf).contains(File.read('/files/document.pdf').subject("test").to("+4923456123456")
+    fax = OrderFax.new(:pdf).contains(File.read('/files/document.pdf')).subject("test").to("+4923456123456")
+
+Creating a PDF fax on Windows (Force Binary Mode on File Read):
+
+    fax = OrderFax.new(:pdf).contains(File.open('/files/document.pdf','rb') {|io| io.read}).subject("test").to("+4923456123456")
 
 It is possible to specify more than one receipent:
 
