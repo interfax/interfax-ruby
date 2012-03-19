@@ -58,6 +58,7 @@ module Interfax
       @recipients = nil
       @subject = "Change me"
       @retries = "0"
+      @csid = nil
     end
     
     def contains(content)
@@ -85,6 +86,12 @@ module Interfax
       self
     end
     
+
+    #Sender CSID (up to 20 characters). If not provided, user's default CSID is used.
+    def csid=(csid_string)
+        @csid = csid_string.to_s[0,20]
+    end
+    
     def summary
       { 
         :fax_numbers => @recipients, 
@@ -97,7 +104,8 @@ module Interfax
     end
     
     def deliver
-      result = SOAP::WSDLDriverFactory.new("https://ws.interfax.net/dfs.asmx?WSDL").create_rpc_driver.SendfaxEx_2(
+
+      options = {
         :Username => @username,
         :Password => @password,
         :FileTypes => @type,
@@ -111,7 +119,14 @@ module Interfax
         :PageOrientation => 'Portrait',
         :IsHighResolution => 'true',
         :IsFineRendering => 'false'
-      )
+      }
+
+        
+      #option settings
+      options[:CSID] = @csid if @csid
+
+      result = SOAP::WSDLDriverFactory.new("https://ws.interfax.net/dfs.asmx?WSDL").create_rpc_driver.SendfaxEx_2(options)
+
       result ? result.sendfaxEx_2Result : nil
     end
     
