@@ -59,6 +59,7 @@ module Interfax
       @subject = "Change me"
       @retries = "0"
       @csid = nil
+      @page_header = nil
     end
     
     def contains(content)
@@ -92,6 +93,18 @@ module Interfax
         @csid = csid_string.to_s[0,20]
     end
     
+    #The fax header text to insert at the top of the page. Enter a string template 
+    #to send a fax with a dynamically-populated header. For placeholder documentation, 
+    #see your online settings under Preferences -> Outgoing -> Header Properties. 
+    #For example, in the string 
+    #     To: {To} From: {From} Pages: {TotalPages} 
+    # the placeholders {To}, {From}, and {Pages} will be populated by their respective values.
+    #
+    # Alternatively, enter Y or a null string to send the fax with a constant header 
+    # that is defined in your online preferences above or N to send the fax without a header.
+    def page_header=(header_string)
+        @page_header = header_string.to_s.strip
+    end
     def summary
       { 
         :fax_numbers => @recipients, 
@@ -124,6 +137,7 @@ module Interfax
         
       #option settings
       options[:CSID] = @csid if @csid
+      options[:PageHeader] = @page_header if @page_header
 
       result = SOAP::WSDLDriverFactory.new("https://ws.interfax.net/dfs.asmx?WSDL").create_rpc_driver.SendfaxEx_2(options)
 
