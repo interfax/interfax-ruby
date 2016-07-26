@@ -30,8 +30,12 @@ module InterFAX
       InterFAX::Account.new(self)
     end
 
-    def get path
-      uri = uri_for(path)
+    def outbound
+      InterFAX::Outbound.new(self)
+    end
+
+    def get path, params = {}, valid_keys = {}
+      uri = uri_for(path, params, valid_keys)
       message = Net::HTTP::Get.new(uri.request_uri)
       message.basic_auth username, password
       transmit(message)
@@ -39,10 +43,17 @@ module InterFAX
 
     private
 
-    def uri_for(path, params = {})
+    def uri_for(path, params = {}, keys = {})
+      params = filter(params, keys)
       uri = URI("https://#{DOMAIN}#{path}")
       uri.query = URI.encode_www_form(params)
       uri
+    end
+
+    def filter params = {}, keys = {}
+      params.delete_if do |key, value|
+        !keys.include? key.to_sym
+      end
     end
 
     def transmit(message)
@@ -70,7 +81,7 @@ module InterFAX
 
     def json?(response)
       content_type = response['Content-Type']
-      json_header = content_type && content_type.split(';').first == 'application/json'
+      json_header = content_type && content_type.split(';').first == 'text/json'
       has_body = response.body && response.body.length > 0
       json_header && has_body
     end
