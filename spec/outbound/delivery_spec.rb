@@ -7,7 +7,7 @@ describe 'InterFAX::Outbound::Delivery' do
   end
 
   it "should call the client" do
-    response = {id: '123'}
+    response = "https://rest.interfax.net/outbound/faxes/123"
     @client.expect :post, response do |path, params, valid_keys, headers, body|
       path == '/outbound/faxes' &&
       params == {faxNumber: '11111'} &&

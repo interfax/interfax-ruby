@@ -2,7 +2,7 @@ class InterFAX::Outbound::Delivery
   attr_accessor :client, :params, :files, :fax_number
 
   VALID_KEYS = [:faxNumber, :contact, :postponeTime, :retriesToPerform, :csid, :pageHeader, :reference, :replyAddress, :pageSize, :fitToPage, :pageOrientation, :resolution, :rendering]
-  BOUNDARY = "265001916915724"
+  BOUNDARY = "43e578690a6d14bf1d776cd55e7d7e29"
   HEADERS = {
     "Content-Type" => "multipart/mixed; boundary=#{BOUNDARY}"
   }.freeze
@@ -18,7 +18,7 @@ class InterFAX::Outbound::Delivery
     body = body_for(file_objects)
 
     result = client.post('/outbound/faxes', params, VALID_KEYS, HEADERS, body)
-    InterFAX::Outbound::Fax.new(result.merge(client: client))
+    InterFAX::Outbound::Fax.new(client: client, id: result.split('/').last)
   end
 
   private
@@ -46,7 +46,7 @@ class InterFAX::Outbound::Delivery
 
   def body_for(files)
     files.map do |file|
-      "--#{BOUNDARY}\r\n#{file.header}\r\n#{file.body}\r\n"
+      "--#{BOUNDARY}\r\n#{file.header}\r\n\r\n#{file.body}\r\n"
     end.join + "--#{BOUNDARY}\r\n"
   end
 end
