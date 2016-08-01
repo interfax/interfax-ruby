@@ -26,6 +26,6 @@ class InterFAX::File
     mime_type = MimeMagic.by_magic(file)
 
     self.header = "Content-Type: #{mime_type}"
-    self.body = file.read
+    self.body = File.open(path, 'rb').read
   end
 end

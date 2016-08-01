@@ -1,13 +1,17 @@
 class InterFAX::Outbound
 
+  attr_writer :delivery
+
   def initialize client
     @client = client
   end
 
+  def delivery
+    @delivery ||= InterFAX::Outbound::Delivery.new(@client)
+  end
+
   def deliver params = {}
-    location = InterFAX::Outbound::Delivery.new(@client, params).execute
-    id = location.split("/").last
-    InterFAX::Outbound::Fax.new(id: id, client: @client)
+    delivery.deliver(params)
   end
 
   def all params = {}
@@ -18,8 +22,8 @@ class InterFAX::Outbound
     end
   end
 
-  def completed ids = []
-    params = { ids: ids }
+  def completed *ids
+    params = { ids: [ids].flatten }
     valid_keys = [:ids]
     @client.get('/outbound/faxes/completed', params, valid_keys).map do |fax|
       fax[:client] = @client

@@ -10,6 +10,7 @@ module InterFAX
     class UnauthorizedError < StandardError; end
 
     attr_accessor :username, :password, :http
+    attr_writer :outbound, :account
 
     DOMAIN = "rest.interfax.net".freeze
     USER_AGENT = "InterFAX Ruby #{InterFAX::VERSION}".freeze
@@ -95,11 +96,11 @@ module InterFAX
           response.body
         end
       when Net::HTTPNotFound
-        raise NotFoundError, "Record not found (404)"
+        raise NotFoundError, "Record not found: #{response.body}"
       when Net::HTTPBadRequest
-        raise BadRequestError, "Bad request (400)"
+        raise BadRequestError, "Bad request (400): #{response.body}"
       when Net::HTTPUnauthorized
-        raise UnauthorizedError, "Access Denied (401)"
+        raise UnauthorizedError, "Access Denied (401): #{response.body}"
       else
         if json?(response)
           raise ServerError, "HTTP #{response.code}: #{JSON.parse(response.body)}"

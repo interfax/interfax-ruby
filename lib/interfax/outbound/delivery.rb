@@ -3,40 +3,38 @@ class InterFAX::Outbound::Delivery
 
   VALID_KEYS = [:faxNumber, :contact, :postponeTime, :retriesToPerform, :csid, :pageHeader, :reference, :replyAddress, :pageSize, :fitToPage, :pageOrientation, :resolution, :rendering]
   BOUNDARY = "265001916915724"
+  HEADERS = {
+    "Content-Type" => "multipart/mixed; boundary=#{BOUNDARY}"
+  }.freeze
 
-  def initialize client, params
+  def initialize client
     self.client = client
-    self.params = params
   end
 
-  def execute
-    validate_params
+  def deliver params
+    params, files = validate_params(params)
 
-    headers = generate_headers
-    files = generate_files
-    body = body_for(files)
+    file_objects = generate_file_objects(files)
+    body = body_for(file_objects)
 
-    client.post('/outbound/faxes', params, VALID_KEYS, headers, body)
+    result = client.post('/outbound/faxes', params, VALID_KEYS, HEADERS, body)
+    InterFAX::Outbound::Fax.new(result.merge(client: client))
   end
 
   private
 
-  def validate_params
+  def validate_params params
     self.fax_number = params[:faxNumber] || raise(ArgumentError.new('Missing argument: faxNumber'))
-    self.files = [params[:file] || params[:files] || raise(ArgumentError.new('Missing argument: file or files'))].flatten
+    files = [params[:file] || params[:files] || raise(ArgumentError.new('Missing argument: file or files'))].flatten
 
     params.delete(:fax_number)
     params.delete(:file)
     params.delete(:files)
+
+    [params, files]
   end
 
-  def generate_headers
-    {
-      "Content-Type" => "multipart/mixed; boundary=#{BOUNDARY}"
-    }
-  end
-
-  def generate_files
+  def generate_file_objects files
     files.map do |file|
       if file.kind_of?(String)
         InterFAX::File.new(file)
