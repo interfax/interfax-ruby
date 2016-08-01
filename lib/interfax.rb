@@ -6,6 +6,7 @@ require 'interfax/file'
 require 'interfax/outbound'
 require 'interfax/outbound/fax'
 require 'interfax/outbound/delivery'
+require 'interfax/inbound'
 require 'interfax/image'
 
 require 'awesome_print'

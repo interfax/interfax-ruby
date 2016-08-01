@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('mimemagic', '~>0.3.1')
 
   s.add_development_dependency('rake')
+  s.add_development_dependency('fakefs')
   s.add_development_dependency('webmock')
   s.add_development_dependency('minitest')
   s.add_development_dependency('awesome_print')

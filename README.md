@@ -58,7 +58,7 @@ interfax.account.balance
 
 ## Outbound
 
-[Send](#send-fax) | [Get list](#get-fax-list) | [Get completed list](#get-completed-fax-list) | [Get record](#get-individual-fax-record) | [Get image](#get-fax-image) | [Cancel fax](#cancel-a-fax) | [Search](#search-fax-list)
+[Send](#send-fax) | [Get list](#get-outbound-fax-list) | [Get completed list](#get-completed-fax-list) | [Get record](#get-outbound-fax-record) | [Get image](#get-outbound-fax-image) | [Cancel fax](#cancel-a-fax) | [Search](#search-fax-list)
 
 ### Send fax
 
@@ -77,7 +77,7 @@ The returned object is a `InterFAX::Outbound::Fax` with just an `id`. You can us
 
 ```rb
 fax = interfax.outbound.deliver(faxNumber: "+11111111112", file: 'file://fax.pdf')
-fax.load_info # load more information about this fax
+fax = fax.reload # load more information about this fax
 fax.image     # load the image sent to the faxNumber
 fax.cancel    # cancel the sending of the fax
 ```
@@ -106,7 +106,7 @@ Under the hood every path and string is turned into a  [InterFAX::File](#InterFa
 
 ----
 
-### Get fax list
+### Get outbound fax list
 
 `interfax.outbound.all(options = {})`
 
@@ -130,7 +130,7 @@ interfax.outbound.all
 Get details for a subset of completed faxes from a submitted list. (Submitted id's which have not completed are ignored).
 
 ```ruby
-interfax.outbound.completed([123, 234])
+interfax.outbound.completed(123, 234)
 => [#<InterFAX::Outbound::Fax>, ...]
 ```
 
@@ -138,7 +138,7 @@ interfax.outbound.completed([123, 234])
 
 ----
 
-### Get individual fax record
+### Get outbound fax record
 
 `interfax.outbound.find(fax_id)`
 
@@ -153,7 +153,7 @@ interfax.outbound.find(123456)
 
 ----
 
-### Get fax image
+### Get oubound fax image
 
 `interfax.outbound.image(fax_id)`
 
@@ -200,23 +200,131 @@ interfax.outbound.search(faxNumber: '+1230002305555')
 
 **Documentation:** [`GET /outbound/search`](https://www.interfax.net/en/dev/rest/reference/2959)
 
-
 [**Options:**](https://www.interfax.net/en/dev/rest/reference/2959) `ids`, `reference`, `dateFrom`, `dateTo`, `status`, `userId`, `faxNumber`, `limit`, `offset`
 
-## Outbound
+## Inbound
 
-TBD
+### Get inbound fax list
+
+`interfax.inbound.all(options = {})`
+
+Retrieves a user's list of inbound faxes. (Sort order is always in descending ID).
+
+```ruby
+interfax.inbound.all
+=> [#<InterFAX::Inbound::Fax>, ...]
+```
+
+**Documentation:** [`GET /inbound/faxes`](https://www.interfax.net/en/dev/rest/reference/2935)
+
+[**Options:**](https://www.interfax.net/en/dev/rest/reference/2935) `unreadOnly`, `limit`, `lastId`, `allUsers`
+
+---
+
+### Get inbound fax record
+
+`interfax.inbound.find(fax_id)`
+
+Retrieves a single fax's metadata (receive time, sender number, etc.).
+
+```ruby
+interfax.inbound.find(123456)
+=> #<InterFAX::Inbound::Fax>
+```
+
+**Documentation:** [`GET /inbound/faxes/:id`](https://www.interfax.net/en/dev/rest/reference/2938)
+
+---
+
+### Get inbound fax image
+
+`interfax.inbound.image(fax_id)`
+
+Retrieves a single fax's image.
+
+```ruby
+image = interfax.inbound.image(123456)
+=> #<InterFAX::Image>
+image.data
+=> # "....binary data...."
+image.save('fax.tiff')
+=> # saves image to file
+```
+
+**Documentation:** [`GET /inbound/faxes/:id/image`](https://www.interfax.net/en/dev/rest/reference/2937)
+
+---
+
+### Get forwarding emails
+
+`interfax.inbound.emails(fax_id)`
+
+Retrieve the list of email addresses to which a fax was forwarded.
+
+```ruby
+interfax.inbound.email(123456)
+=> [#<InterFAX::Email>]
+```
+
+**Documentation:** [`GET /inbound/faxes/:id/emails`](https://www.interfax.net/en/dev/rest/reference/2930)
+
+---
+
+### Mark as read/unread
+
+`interfax.inbound.mark(fax_id, read: is_read)`
+
+Mark a transaction as read/unread.
+
+```ruby
+interfax.inbound.mark(123456, read: true) # mark read
+=> true
+interfax.inbound.mark(123456, read: false) # mark unread
+=> true
+```
+
+**Documentation:** [`POST /inbound/faxes/:id/mark`](https://www.interfax.net/en/dev/rest/reference/2936)
+
+### Resend inbound fax
+
+`interfax.inbound.resend(fax_id, email: to_email)`
+
+Resend an inbound fax to a specific email address.
+
+```ruby
+# resend to the email(s) to which the fax was previously forwarded
+interfax.inbound.resend(123456)
+=> true
+# resend to a specific address
+interfax.inbound.resend(123456, email: 'test@example.com')
+=> true
+```
+
+---
 
 ## Helper Classes
 
 ### InterFAX::Outbound::Fax
 
-The `InterFAX::Outbound::Fax` is returned in most APIs. As a convenience the following methods are available.
+The `InterFAX::Outbound::Fax` is returned in most Outbound APIs. As a convenience the following methods are available.
 
 ```rb
 fax = interfax.outbound.find(123)
-fax.load_info # Loads or reloads object
+fax = fax.reload # Loads or reloads object
 fax.cancel # Cancels the fax
+fax.image # Returns a `InterFAX::Image` for this fax
+fax.attributes # Returns a plain hash with all the attributes
+```
+
+### InterFAX::Inbound::Fax
+
+The `InterFAX::Inbound::Fax` is returned in some of the Inbound APIs. As a convenience the following methods are available.
+
+```rb
+fax = interfax.inbound.find(123)
+fax = fax.reload # Loads or reloads object
+fax.mark(true) # Marks the fax as read/unread
+fax.resend(email: email) # Resend the fax to a specific email address.
 fax.image # Returns a `InterFAX::Image` for this fax
 fax.attributes # Returns a plain hash with all the attributes
 ```

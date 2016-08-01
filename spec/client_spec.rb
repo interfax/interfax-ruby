@@ -55,6 +55,12 @@ describe 'InterFAX::Client' do
     end
   end
 
+  describe '.inbound' do
+    it "should return a InterFAX::Inbound" do
+      @client.inbound.must_be_instance_of InterFAX::Inbound
+    end
+  end
+
   describe '.get' do
     it "should return the json on success" do
       stub_request(:get, /rest.interfax.net\/accounts\/self\/ppcards\/balance/).

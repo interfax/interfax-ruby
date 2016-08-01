@@ -6,4 +6,10 @@ class InterFAX::Image < InterFAX::Object
     self.data = _data
     result
   end
+
+  def save filename
+    File.open(filename, 'wb') do |file|
+      file.write(data)
+    end
+  end
 end

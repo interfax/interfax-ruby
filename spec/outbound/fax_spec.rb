@@ -26,4 +26,11 @@ describe 'InterFAX::Outbound::Fax' do
     end
   end
 
+  describe '.reload' do
+    it "should delegate to the outbound client" do
+      @outbound.expect :find, nil, [123]
+      @fax.reload
+      @outbound.verify
+    end
+  end
 end

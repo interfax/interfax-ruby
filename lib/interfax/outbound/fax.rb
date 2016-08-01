@@ -6,4 +6,8 @@ class InterFAX::Outbound::Fax < InterFAX::Object
   def cancel
     client.outbound.cancel(id)
   end
+
+  def reload
+    client.outbound.find(id)
+  end
 end
