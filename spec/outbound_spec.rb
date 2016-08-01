@@ -1,6 +1,6 @@
 require_relative './test_helper'
 
-describe 'InterFAX::Client::Outbound' do
+describe 'InterFAX::Outbound' do
   before do
     @client = Minitest::Mock.new
     @outbound = InterFAX::Outbound.new(@client)

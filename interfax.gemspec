@@ -17,5 +17,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency('fakefs')
   s.add_development_dependency('webmock')
   s.add_development_dependency('minitest')
-  s.add_development_dependency('awesome_print')
 end

@@ -204,6 +204,8 @@ interfax.outbound.search(faxNumber: '+1230002305555')
 
 ## Inbound
 
+[Get list](#get-inbound-fax-list) | [Get record](#get-inbound-fax-record) | [Get image](#get-inbound-fax-image) | [Get emails](#get-forwarding-emails) | [Mark as read](#mark-as-readunread) | [Resend to email](#resend-inbound-fax)
+
 ### Get inbound fax list
 
 `interfax.inbound.all(options = {})`
@@ -324,8 +326,9 @@ The `InterFAX::Inbound::Fax` is returned in some of the Inbound APIs. As a conve
 fax = interfax.inbound.find(123)
 fax = fax.reload # Loads or reloads object
 fax.mark(true) # Marks the fax as read/unread
-fax.resend(email: email) # Resend the fax to a specific email address.
+fax.resend(email) # Resend the fax to a specific email address.
 fax.image # Returns a `InterFAX::Image` for this fax
+fax.emails # Returns a list of InterFAX::ForwardingEmail objects that the fax was forwarded on to
 fax.attributes # Returns a plain hash with all the attributes
 ```
 
@@ -366,6 +369,18 @@ file.body #=> '....binary data.....'
 file = InterFAX::File.new('https://foo.com/bar.html')
 file.header #=> "Content-Location: https://foo.com/bar.html"
 file.body #=> nil
+```
+
+### InterFAX::ForwardingEmail
+
+A light wrapper around [the response](https://www.interfax.net/en/dev/rest/reference/2930) received by asking for the forwarded emails for a fax.
+
+```ruby
+fax = interfax.inbound.find(123)
+email = fax.emails.first
+email.emailAddress # An email address to which forwarding of the fax was attempted.
+email.messageStatus # 0 = OK; number smaller than zero = in progress; number greater than zero = error.
+email.completionTime # Completion timestamp.
 ```
 
 # License
