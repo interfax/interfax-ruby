@@ -2,7 +2,7 @@
 
 [Installation](#installation) | [Getting Started](#getting-started) | [Usage](#usage) | [License](#license)
 
-[![Gem Version](https://badge.fury.io/rb/interfax.svg)](https://badge.fury.io/rb/interfax)
+[![Gem Version](https://badge.fury.io/rb/interfax.svg)](https://badge.fury.io/rb/interfax) [![Build Status](https://travis-ci.org/interfax/interfax-ruby.svg?branch=master)](https://travis-ci.org/interfax/interfax-ruby)
 
 Send and receive faxes in Ruby with the [InterFAX](https://www.interfax.net/en/dev) REST API.
 
