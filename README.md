@@ -1,6 +1,6 @@
 # InterFAX Ruby Gem
 
-[Installation](#Installation) | [Getting Started](#Getting Started) | [Usage](#Usage) | [License](#License)
+[Installation](#installation) | [Getting Started](#getting-started) | [Usage](#usage) | [License](#license)
 
 [![Gem Version](https://badge.fury.io/rb/interfax.svg)](https://badge.fury.io/rb/interfax)
 
@@ -26,6 +26,8 @@ interfax.deliver(faxNumber: "+11111111112", file: 'folder/fax.pdf')
 ```
 
 # Usage
+
+[Client](#client) | [Account](#account) | [Outbound](#outbound) | [Inbound](#inbound) | [Helper Classes](#helper-classes)
 
 ## Client
 
@@ -56,7 +58,7 @@ interfax.account.balance
 
 ## Outbound
 
-[Send](#Send fax) | [Get list](#Get fax list) | [Get completed list](#Get completed fax list) | [Get record](#Get individual fax record) | [Get image](#Get fax image) | [Cancel fax](#Cancel a fax) | [Search](#Search fax list)
+[Send](#send-fax) | [Get list](#get-fax-list) | [Get completed list](#get-completed-fax-list) | [Get record](#get-individual-fax-record) | [Get image](#get-fax-image) | [Cancel fax](#cancel-a-fax) | [Search](#search-fax-list)
 
 ### Send fax
 
@@ -200,6 +202,10 @@ interfax.outbound.search(faxNumber: '+1230002305555')
 
 
 [**Options:**](https://www.interfax.net/en/dev/rest/reference/2959) `ids`, `reference`, `dateFrom`, `dateTo`, `status`, `userId`, `faxNumber`, `limit`, `offset`
+
+## Outbound
+
+TBD
 
 ## Helper Classes
 
