@@ -1,26 +1,26 @@
 # InterFAX Ruby Gem
 
-[Installation](#installation) | [Getting Started](#getting-started) | [Usage](#usage) | [License](#license)
-
 [![Gem Version](https://badge.fury.io/rb/interfax.svg)](https://badge.fury.io/rb/interfax) [![Build Status](https://travis-ci.org/interfax/interfax-ruby.svg?branch=master)](https://travis-ci.org/interfax/interfax-ruby)
 
-Send and receive faxes in Ruby with the [InterFAX](https://www.interfax.net/en/dev) REST API.
+[Installation](#installation) | [Getting Started](#getting-started) | [Contributing](#contributing) | [Usage](#usage) | [License](#license)
 
+Send and receive faxes in Ruby with the [InterFAX](https://www.interfax.net/en/dev) REST API.
 
 ## Installation
 
 Either install directly or via bundler.
 
 ```ruby
-gem 'interfax', github: 'interfax/interfax-ruby', branch: 'rest-client'
+gem 'interfax', '~> 1.0.0'
 ```
 
 ## Getting started
 
-To send a fax from a pdf file:
+To send a fax from a PDF file:
 
 ```ruby
 require 'interfax'
+
 interfax = InterFAX::Client.new(username: 'username', password: 'password')
 interfax.deliver(faxNumber: "+11111111112", file: 'folder/fax.pdf')
 ```
@@ -382,6 +382,14 @@ email.emailAddress # An email address to which forwarding of the fax was attempt
 email.messageStatus # 0 = OK; number smaller than zero = in progress; number greater than zero = error.
 email.completionTime # Completion timestamp.
 ```
+
+## Contributing
+
+ 1. **Fork** the repo on GitHub
+ 2. **Clone** the project to your own machine
+ 3. **Commit** changes to your own branch
+ 4. **Push** your work back up to your fork
+ 5. Submit a **Pull request** so that we can review your changes
 
 # License
 
