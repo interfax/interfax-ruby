@@ -37,7 +37,7 @@ class InterFAX::Outbound::Delivery
   def generate_file_objects files
     files.map do |file|
       if file.kind_of?(String)
-        InterFAX::File.new(file)
+        InterFAX::File.new(client, file)
       elsif file.kind_of?(InterFAX::File)
         file
       end
