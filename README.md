@@ -27,7 +27,7 @@ interfax.deliver(faxNumber: "+11111111112", file: 'folder/fax.pdf')
 
 # Usage
 
-[Client](#client) | [Account](#account) | [Outbound](#outbound) | [Inbound](#inbound) | [Helper Classes](#helper-classes)
+[Client](#client) | [Account](#account) | [Outbound](#outbound) | [Inbound](#inbound) | [Documents](#documents) | [Helper Classes](#helper-classes)
 
 ## Client
 
@@ -54,7 +54,7 @@ interfax.account.balance
 => 9.86
 ```
 
-**Documentation:** [`GET /accounts/self/ppcards/balance`](https://www.interfax.net/en/dev/rest/reference/3001)
+**Options:** [none](https://www.interfax.net/en/dev/rest/reference/3001)
 
 ## Outbound
 
@@ -86,7 +86,7 @@ Alternatively you can create an `InterFAX::File` with binary data and pass this 
 
 ```ruby
 data = File.open('file://fax.pdf').read
-file = InterFAX::File.new(data, mime_type: 'application/pdf')
+file = interfax.files.create(data, mime_type: 'application/pdf')
 interfax.outbound.deliver(faxNumber: "+11111111112", file: file)
 ```
 
@@ -98,9 +98,7 @@ interfax.outbound.deliver(faxNumber: "+11111111112", files: ['file://fax.pdf', '
 
 Under the hood every path and string is turned into a  [InterFAX::File](#InterFax::File) object. For more information see [the documentation](#InterFax::File) for this class.
 
-**Documentation:** [`POST /outbound/faxes`](https://www.interfax.net/en/dev/rest/reference/2918)
-
-[**Additional options:**](https://www.interfax.net/en/dev/rest/reference/2918) `contact`, `postponeTime`, `retriesToPerform`, `csid`, `pageHeader`, `reference`, `pageSize`, `fitToPage`, `pageOrientation`, `resolution`, `rendering`
+**Options:** [`contact`, `postponeTime`, `retriesToPerform`, `csid`, `pageHeader`, `reference`, `pageSize`, `fitToPage`, `pageOrientation`, `resolution`, `rendering`](https://www.interfax.net/en/dev/rest/reference/2918)
 
 **Alias**: `interfax.deliver`
 
@@ -117,9 +115,7 @@ interfax.outbound.all
 => [#<InterFAX::Outbound::Fax>, ...]
 ```
 
-**Documentation:** [`GET /outbound/faxes`](https://www.interfax.net/en/dev/rest/reference/2920)
-
-[**Options:**](https://www.interfax.net/en/dev/rest/reference/2920) `limit`, `lastId`, `sortOrder`, `userId`
+**Options:** [`limit`, `lastId`, `sortOrder`, `userId`](https://www.interfax.net/en/dev/rest/reference/2920)
 
 ----
 
@@ -134,7 +130,7 @@ interfax.outbound.completed(123, 234)
 => [#<InterFAX::Outbound::Fax>, ...]
 ```
 
-**Documentation:** [`GET /outbound/faxes/completed`](https://www.interfax.net/en/dev/rest/reference/2972)
+**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2972)
 
 ----
 
@@ -149,7 +145,7 @@ interfax.outbound.find(123456)
 => #<InterFAX::Outbound::Fax>
 ```
 
-**Documentation:** [`GET /outbound/faxes/:id`](https://www.interfax.net/en/dev/rest/reference/2921)
+**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2921)
 
 ----
 
@@ -168,7 +164,7 @@ image.save('fax.tiff')
 => # saves image to file
 ```
 
-**Documentation:** [`GET /outbound/faxes/:id/image`](https://www.interfax.net/en/dev/rest/reference/2941)
+**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2941)
 
 ----
 
@@ -183,7 +179,7 @@ interfax.outbound.cancel(123456)
 => #<InterFAX::Outbound::Fax>
 ```
 
-**Documentation:** [`GET /outbound/faxes/:id/cancel`](https://www.interfax.net/en/dev/rest/reference/2939)
+**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2939)
 
 ----
 
@@ -198,9 +194,7 @@ interfax.outbound.search(faxNumber: '+1230002305555')
 => [#<InterFAX::Outbound::Fax>, ...]
 ```
 
-**Documentation:** [`GET /outbound/search`](https://www.interfax.net/en/dev/rest/reference/2959)
-
-[**Options:**](https://www.interfax.net/en/dev/rest/reference/2959) `ids`, `reference`, `dateFrom`, `dateTo`, `status`, `userId`, `faxNumber`, `limit`, `offset`
+**Options:** [`ids`, `reference`, `dateFrom`, `dateTo`, `status`, `userId`, `faxNumber`, `limit`, `offset`](https://www.interfax.net/en/dev/rest/reference/2959)
 
 ## Inbound
 
@@ -217,9 +211,7 @@ interfax.inbound.all
 => [#<InterFAX::Inbound::Fax>, ...]
 ```
 
-**Documentation:** [`GET /inbound/faxes`](https://www.interfax.net/en/dev/rest/reference/2935)
-
-[**Options:**](https://www.interfax.net/en/dev/rest/reference/2935) `unreadOnly`, `limit`, `lastId`, `allUsers`
+**Options:** [`unreadOnly`, `limit`, `lastId`, `allUsers`](https://www.interfax.net/en/dev/rest/reference/2935)
 
 ---
 
@@ -234,7 +226,7 @@ interfax.inbound.find(123456)
 => #<InterFAX::Inbound::Fax>
 ```
 
-**Documentation:** [`GET /inbound/faxes/:id`](https://www.interfax.net/en/dev/rest/reference/2938)
+**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2938)
 
 ---
 
@@ -253,7 +245,7 @@ image.save('fax.tiff')
 => # saves image to file
 ```
 
-**Documentation:** [`GET /inbound/faxes/:id/image`](https://www.interfax.net/en/dev/rest/reference/2937)
+**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2937)
 
 ---
 
@@ -268,7 +260,7 @@ interfax.inbound.email(123456)
 => [#<InterFAX::Email>]
 ```
 
-**Documentation:** [`GET /inbound/faxes/:id/emails`](https://www.interfax.net/en/dev/rest/reference/2930)
+**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2930)
 
 ---
 
@@ -285,7 +277,9 @@ interfax.inbound.mark(123456, read: false) # mark unread
 => true
 ```
 
-**Documentation:** [`POST /inbound/faxes/:id/mark`](https://www.interfax.net/en/dev/rest/reference/2936)
+**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2936)
+
+---
 
 ### Resend inbound fax
 
@@ -301,6 +295,103 @@ interfax.inbound.resend(123456)
 interfax.inbound.resend(123456, email: 'test@example.com')
 => true
 ```
+
+**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2929)
+
+---
+
+## Documents
+
+[Create](#create-document) | [Upload chunk](#upload-chunk) | [Get list](#get-document-list) | [Status](#get-document-status) | [Cancel](#cancel-document)
+
+Document allow for uploading of large files up to 20MB in 200kb chunks. The `InterFAX::File` format automatically uses this if needed but a sample implementation would look as followed.
+
+```ruby
+file = File.open('test.pdf', 'rb')
+
+document = interfax.documents.create('test.pdf', file.size)
+
+cursor = 0
+while !file.eof?
+  chunk = file.read(500)
+  next_cursor = cursor + chunk.length
+  document.upload(cursor, next_cursor-1, chunk)
+  cursor = next_cursor
+end
+```
+
+### Create Documents
+
+`interfax.documents.create(name, size, options = {})`
+
+Create a document upload session, allowing you to upload large files in chunks.
+
+```ruby
+interfax.documents.create('large_file.pdf', '231234')
+=> #<InterFAX::Document uri="https://rest.interfax.net/outbound/documents/123456">
+```
+
+**Options:** [`disposition`, `sharing`](https://www.interfax.net/en/dev/rest/reference/2967)
+
+---
+
+### Upload chunk
+
+`interfax.documents.upload(id, range_start, range_end, chunk)`
+
+Upload a chunk to an existing document upload session.
+
+```ruby
+interfax.documents.upload(123456, 0, 999, "....binary-data....")
+=> true
+```
+
+**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2966)
+
+---
+
+### Get document list
+
+`interfax.documents.all(options = {})`
+
+Get a list of previous document uploads which are currently available.
+
+```ruby
+interfax.documents.all
+=> #[#<InterFAX::Document>, ...]
+```
+
+**Options:** [`limit`, `offset`](https://www.interfax.net/en/dev/rest/reference/2968)
+
+---
+
+### Get document status
+
+`interfax.documents.find(id)`
+
+Get the current status of a specific document upload.
+
+```ruby
+interfax.documents.find(123456)
+=> #<InterFAX::Document ... >
+```
+
+**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2965)
+
+---
+
+### Cancel document
+
+`interfax.documents.cancel(id)`
+
+Cancel a document upload and tear down the upload session, or delete a previous upload.
+
+```ruby
+interfax.documents.cancel(123456)
+=> true
+```
+
+**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2964)
 
 ---
 
@@ -344,15 +435,21 @@ image.save('folder/fax.tiff') # Saves the TIFF to the path provided
 
 ### InterFAX::File
 
-This class is used by `interfax.outbound.deliver` to turn every URL, path and binary data into a uniform format, ready to be sent out to the InterFAX API.
+This class is used by `interfax.outbound.deliver` and `interfax.files` to turn every URL, path and binary data into a uniform format, ready to be sent out to the InterFAX API.
 
 It is most useful for sending binary data to the `.deliver` method.
 
 ```rb
 # binary data
-file = InterFAX::File.new('....binary data.....', mime_type: 'application/pdf')
-file.header #=> "Content-Type: application/pdf"
-file.body #=> '....binary data.....'
+file = InterFAX::File.new(interfax, '....binary data.....', mime_type: 'application/pdf')
+=> #<InterFAX::File>
+
+# Alternatively
+file = interfax.files.create('....binary data.....', mime_type: 'application/pdf')
+file.header
+=> "Content-Type: application/pdf"
+file.body
+=> '....binary data.....'
 
 interfax.outbound.deliver(faxNumber: '+1111111111112', file: file)
 ```
@@ -361,12 +458,12 @@ Additionally it can be used to turn a URL or path into a valid object as well, t
 
 ```rb
 # a file by path
-file = InterFAX::File.new('foo/bar.pdf')
+file = interfax.files.create('foo/bar.pdf')
 file.header #=> "Content-Type: application/pdf"
 file.body #=> '....binary data.....'
 
 # a file by url
-file = InterFAX::File.new('https://foo.com/bar.html')
+file = interfax.files.create('https://foo.com/bar.html')
 file.header #=> "Content-Location: https://foo.com/bar.html"
 file.body #=> nil
 ```
@@ -381,6 +478,18 @@ email = fax.emails.first
 email.emailAddress # An email address to which forwarding of the fax was attempted.
 email.messageStatus # 0 = OK; number smaller than zero = in progress; number greater than zero = error.
 email.completionTime # Completion timestamp.
+```
+
+### InterFAX::Document
+
+The `InterFAX::Document` is returned in most of the Document APIs. As a convenience the following methods are available.
+
+```ruby
+document = interfax.documents.find(123)
+document = document.reload # Loads or reloads object
+document.upload(0, 999, '.....binary data....' # Maps to the interfax.documents.upload method
+document.cancel # Maps to the interfax.documents.upload method
+document.id  # Extracts the ID from the URI (the API does not return the ID)
 ```
 
 ## Contributing

@@ -10,7 +10,7 @@ module InterFAX
     class UnauthorizedError < StandardError; end
 
     attr_accessor :username, :password, :http
-    attr_writer :outbound, :inbound, :account
+    attr_writer :outbound, :inbound, :account, :documents, :files
 
     DOMAIN = "rest.interfax.net".freeze
     USER_AGENT = "InterFAX Ruby #{InterFAX::VERSION}".freeze
@@ -45,6 +45,14 @@ module InterFAX
       @inbound ||= InterFAX::Inbound.new(self)
     end
 
+    def documents
+      @documents ||= InterFAX::Documents.new(self)
+    end
+
+    def files
+      @files ||= InterFAX::Files.new(self)
+    end
+
     def get path, params = {}, valid_keys = {}
       uri = uri_for(path, params, valid_keys)
       request = Net::HTTP::Get.new(uri.request_uri)
@@ -58,6 +66,12 @@ module InterFAX
         request[key] = value
       end
       request.body = body if body
+      transmit(request)
+    end
+
+    def delete path
+      uri = uri_for(path)
+      request = Net::HTTP::Delete.new(uri.request_uri)
       transmit(request)
     end
 
