@@ -516,6 +516,10 @@ document.id  # Extracts the ID from the URI (the API does not return the ID)
  4. **Push** your work back up to your fork
  5. Submit a **Pull request** so that we can review your changes
 
-# License
+## License
 
 This library is released under the [MIT License](LICENSE).
+
+## Credits
+
+Many thanks go to [Sascha Brink](https://github.com/sbrink) for building the pre 1.0 version of this gem and supporting it for so many years.
