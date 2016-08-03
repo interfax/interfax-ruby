@@ -92,7 +92,7 @@ fax.image     # returns an image representing the fax sent to the faxNumber
 fax.cancel    # cancel the sending of the fax
 ```
 
-Alternatively you can create an `InterFAX::File` with binary data and pass this in as well.
+Alternatively you can create an [`InterFAX::File`](#interfaxfile) with binary data and pass this in as well.
 
 ```ruby
 data = File.open('file://fax.pdf').read
@@ -100,13 +100,13 @@ file = interfax.files.create(data, mime_type: 'application/pdf')
 interfax.outbound.deliver(faxNumber: "+11111111112", file: file)
 ```
 
-To send multiple files just pass in an array strings and `InterFAX::File` objects.
+To send multiple files just pass in an array strings and [`InterFAX::File`](#interfaxfile) objects.
 
 ```rb
 interfax.outbound.deliver(faxNumber: "+11111111112", files: ['file://fax.pdf', 'https://s3.aws.com/example/fax.pdf'])
 ```
 
-Under the hood every path and string is turned into a  [InterFAX::File](#InterFax::File) object. For more information see [the documentation](#InterFax::File) for this class.
+Under the hood every path and string is turned into a  [InterFAX::File](#interfaxfile) object. For more information see [the documentation](#interfaxfile) for this class.
 
 **Options:** [`contact`, `postponeTime`, `retriesToPerform`, `csid`, `pageHeader`, `reference`, `pageSize`, `fitToPage`, `pageOrientation`, `resolution`, `rendering`](https://www.interfax.net/en/dev/rest/reference/2918)
 
@@ -318,7 +318,7 @@ interfax.inbound.resend(123456, email: 'test@example.com')
 
 [Create](#create-document) | [Upload chunk](#upload-chunk) | [Get list](#get-document-list) | [Status](#get-document-status) | [Cancel](#cancel-document)
 
-Document allow for uploading of large files up to 20MB in 200kb chunks. The `InterFAX::File` format automatically uses this if needed but a sample implementation would look as followed.
+Document allow for uploading of large files up to 20MB in 200kb chunks. The [`InterFAX::File`](#interfaxfile) format automatically uses this if needed but a sample implementation would look as followed.
 
 ```ruby
 file = File.open('test.pdf', 'rb')
