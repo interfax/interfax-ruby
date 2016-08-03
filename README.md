@@ -142,7 +142,7 @@ interfax.outbound.completed(123, 234)
 => [#<InterFAX::Outbound::Fax>, ...]
 ```
 
-**More:** [none](https://www.interfax.net/en/dev/rest/reference/2972)
+**More:** [documentation](https://www.interfax.net/en/dev/rest/reference/2972)
 
 ----
 
@@ -157,7 +157,7 @@ interfax.outbound.find(123456)
 => #<InterFAX::Outbound::Fax>
 ```
 
-**More:** [none](https://www.interfax.net/en/dev/rest/reference/2921)
+**More:** [documentation](https://www.interfax.net/en/dev/rest/reference/2921)
 
 ----
 
@@ -176,7 +176,7 @@ image.save('fax.tiff')
 => # saves image to file
 ```
 
-**More:** [none](https://www.interfax.net/en/dev/rest/reference/2941)
+**More:** [documentation](https://www.interfax.net/en/dev/rest/reference/2941)
 
 ----
 
@@ -191,7 +191,7 @@ interfax.outbound.cancel(123456)
 => #<InterFAX::Outbound::Fax>
 ```
 
-**More:** [none](https://www.interfax.net/en/dev/rest/reference/2939)
+**More:** [documentation](https://www.interfax.net/en/dev/rest/reference/2939)
 
 ----
 
@@ -240,7 +240,7 @@ interfax.inbound.find(123456)
 => #<InterFAX::Inbound::Fax>
 ```
 
-**More:** [none](https://www.interfax.net/en/dev/rest/reference/2938)
+**More:** [documentation](https://www.interfax.net/en/dev/rest/reference/2938)
 
 ---
 
@@ -259,7 +259,7 @@ image.save('fax.tiff')
 => # saves image to file
 ```
 
-**More:** [none](https://www.interfax.net/en/dev/rest/reference/2937)
+**More:** [documentation](https://www.interfax.net/en/dev/rest/reference/2937)
 
 ---
 
@@ -274,7 +274,7 @@ interfax.inbound.email(123456)
 => [#<InterFAX::Email>]
 ```
 
-**More:** [none](https://www.interfax.net/en/dev/rest/reference/2930)
+**More:** [documentation](https://www.interfax.net/en/dev/rest/reference/2930)
 
 ---
 
@@ -291,7 +291,7 @@ interfax.inbound.mark(123456, read: false) # mark unread
 => true
 ```
 
-**More:** [none](https://www.interfax.net/en/dev/rest/reference/2936)
+**More:** [documentation](https://www.interfax.net/en/dev/rest/reference/2936)
 
 ---
 
@@ -310,7 +310,7 @@ interfax.inbound.resend(123456, email: 'test@example.com')
 => true
 ```
 
-**More:** [none](https://www.interfax.net/en/dev/rest/reference/2929)
+**More:** [documentation](https://www.interfax.net/en/dev/rest/reference/2929)
 
 ---
 
@@ -360,7 +360,7 @@ interfax.documents.upload(123456, 0, 999, "....binary-data....")
 => true
 ```
 
-**More:** [none](https://www.interfax.net/en/dev/rest/reference/2966)
+**More:** [documentation](https://www.interfax.net/en/dev/rest/reference/2966)
 
 ---
 
@@ -407,7 +407,7 @@ interfax.documents.cancel(123456)
 => true
 ```
 
-**More:** [none](https://www.interfax.net/en/dev/rest/reference/2964)
+**More:** [documentation](https://www.interfax.net/en/dev/rest/reference/2964)
 
 ---
 
