@@ -8,7 +8,7 @@ Send and receive faxes in Ruby with the [InterFAX](https://www.interfax.net/en/d
 
 ## Installation
 
-Either install directly or via bundler.
+This gem requires 2.1+. You can install install it directly or via bundler.
 
 ```ruby
 gem 'interfax', '~> 1.0.0'
@@ -22,7 +22,9 @@ To send a fax from a PDF file:
 require 'interfax'
 
 interfax = InterFAX::Client.new(username: 'username', password: 'password')
-interfax.deliver(faxNumber: "+11111111112", file: 'folder/fax.pdf')
+fax = interfax.deliver(faxNumber: "+11111111112", file: 'folder/fax.pdf')
+fax = fax.reload # resync with API to get latest status
+fax.status # Success if 0. Pending if < 0. Error if > 0
 ```
 
 # Usage
@@ -34,14 +36,16 @@ interfax.deliver(faxNumber: "+11111111112", file: 'folder/fax.pdf')
 The client follows the [12-factor](12factor.net/config) apps principle and can be either set directly or via environment variables.
 
 ```ruby
-# using parameters
+# Initialize using parameters
 interfax = InterFAX::Client.new(username: '...', password: '...')
 
-# using environment variables:
+# Alternatice: Initialize using environment variables
 # * INTERFAX_USERNAME
 # * INTERFAX_PASSWORD
 interfax = InterFAX::Client.new
 ```
+
+All connections are established over HTTPS.
 
 ## Account
 
@@ -54,7 +58,7 @@ interfax.account.balance
 => 9.86
 ```
 
-**Options:** [none](https://www.interfax.net/en/dev/rest/reference/3001)
+**More:** [documentation](https://www.interfax.net/en/dev/rest/reference/3001)
 
 ## Outbound
 
@@ -69,16 +73,22 @@ Submit a fax to a single destination number.
 There are a few ways to send a fax. One way is to directly provide a file path or url.
 
 ```ruby
-interfax.outbound.deliver(faxNumber: "+11111111112", file: 'file://fax.pdf')
+# with a path
+interfax.outbound.deliver(faxNumber: "+11111111112", file: 'folder/fax.txt')
+# with a URL
 interfax.outbound.deliver(faxNumber: "+11111111112", file: 'https://s3.aws.com/example/fax.pdf')
 ```
+
+InterFAX supports over 20 file types including HTML, PDF, TXT, Word, and many more. For a full list see the [Supported File Types](https://www.interfax.net/en/help/supported_file_types) documentation.
 
 The returned object is a `InterFAX::Outbound::Fax` with just an `id`. You can use this object to load more information, get the image, or cancel the sending of the fax.
 
 ```rb
 fax = interfax.outbound.deliver(faxNumber: "+11111111112", file: 'file://fax.pdf')
-fax = fax.reload # load more information about this fax
-fax.image     # load the image sent to the faxNumber
+fax = fax.reload # Reload fax, allowing you to inspect the status and more
+
+fax.id        # the ID of the fax that can be used in some of the other API calls
+fax.image     # returns an image representing the fax sent to the faxNumber
 fax.cancel    # cancel the sending of the fax
 ```
 
@@ -113,6 +123,8 @@ Get a list of recent outbound faxes (which does not include batch faxes).
 ```ruby
 interfax.outbound.all
 => [#<InterFAX::Outbound::Fax>, ...]
+interfax.outbound.all(limit: 1)
+=> [#<InterFAX::Outbound::Fax>]
 ```
 
 **Options:** [`limit`, `lastId`, `sortOrder`, `userId`](https://www.interfax.net/en/dev/rest/reference/2920)
@@ -130,7 +142,7 @@ interfax.outbound.completed(123, 234)
 => [#<InterFAX::Outbound::Fax>, ...]
 ```
 
-**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2972)
+**More:** [none](https://www.interfax.net/en/dev/rest/reference/2972)
 
 ----
 
@@ -145,7 +157,7 @@ interfax.outbound.find(123456)
 => #<InterFAX::Outbound::Fax>
 ```
 
-**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2921)
+**More:** [none](https://www.interfax.net/en/dev/rest/reference/2921)
 
 ----
 
@@ -164,7 +176,7 @@ image.save('fax.tiff')
 => # saves image to file
 ```
 
-**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2941)
+**More:** [none](https://www.interfax.net/en/dev/rest/reference/2941)
 
 ----
 
@@ -179,7 +191,7 @@ interfax.outbound.cancel(123456)
 => #<InterFAX::Outbound::Fax>
 ```
 
-**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2939)
+**More:** [none](https://www.interfax.net/en/dev/rest/reference/2939)
 
 ----
 
@@ -209,6 +221,8 @@ Retrieves a user's list of inbound faxes. (Sort order is always in descending ID
 ```ruby
 interfax.inbound.all
 => [#<InterFAX::Inbound::Fax>, ...]
+interfax.inbound.all(limit: 1)
+=> [#<InterFAX::Inbound::Fax>]
 ```
 
 **Options:** [`unreadOnly`, `limit`, `lastId`, `allUsers`](https://www.interfax.net/en/dev/rest/reference/2935)
@@ -226,7 +240,7 @@ interfax.inbound.find(123456)
 => #<InterFAX::Inbound::Fax>
 ```
 
-**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2938)
+**More:** [none](https://www.interfax.net/en/dev/rest/reference/2938)
 
 ---
 
@@ -245,7 +259,7 @@ image.save('fax.tiff')
 => # saves image to file
 ```
 
-**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2937)
+**More:** [none](https://www.interfax.net/en/dev/rest/reference/2937)
 
 ---
 
@@ -260,7 +274,7 @@ interfax.inbound.email(123456)
 => [#<InterFAX::Email>]
 ```
 
-**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2930)
+**More:** [none](https://www.interfax.net/en/dev/rest/reference/2930)
 
 ---
 
@@ -277,7 +291,7 @@ interfax.inbound.mark(123456, read: false) # mark unread
 => true
 ```
 
-**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2936)
+**More:** [none](https://www.interfax.net/en/dev/rest/reference/2936)
 
 ---
 
@@ -296,7 +310,7 @@ interfax.inbound.resend(123456, email: 'test@example.com')
 => true
 ```
 
-**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2929)
+**More:** [none](https://www.interfax.net/en/dev/rest/reference/2929)
 
 ---
 
@@ -346,7 +360,7 @@ interfax.documents.upload(123456, 0, 999, "....binary-data....")
 => true
 ```
 
-**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2966)
+**More:** [none](https://www.interfax.net/en/dev/rest/reference/2966)
 
 ---
 
@@ -358,6 +372,8 @@ Get a list of previous document uploads which are currently available.
 
 ```ruby
 interfax.documents.all
+=> #[#<InterFAX::Document>, ...]
+interfax.documents.all(offset: 10)
 => #[#<InterFAX::Document>, ...]
 ```
 
@@ -376,7 +392,7 @@ interfax.documents.find(123456)
 => #<InterFAX::Document ... >
 ```
 
-**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2965)
+**More:** [documentation](https://www.interfax.net/en/dev/rest/reference/2965)
 
 ---
 
@@ -391,7 +407,7 @@ interfax.documents.cancel(123456)
 => true
 ```
 
-**Options:** [none](https://www.interfax.net/en/dev/rest/reference/2964)
+**More:** [none](https://www.interfax.net/en/dev/rest/reference/2964)
 
 ---
 

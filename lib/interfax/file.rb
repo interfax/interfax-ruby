@@ -27,7 +27,7 @@ class InterFAX::File
 
   def initialize_path(path)
     file = File.open(path)
-    mime_type = MimeMagic.by_magic(file)
+    mime_type = MimeMagic.by_magic(file) || MimeMagic.by_path(file)
     data = File.open(path, 'rb').read
 
     initialize_binary(data, mime_type)
