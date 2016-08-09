@@ -6,4 +6,4 @@ All notable changes to this project will be documented in this file. This projec
 
 Full rebuild using the REST API. First release produced by InterFAX.
 
-[1.0.0-beta-1]: https://github.com/Nexmo/nexmo-cli/tree/v1.0.0-beta-1
+[1.0.0-beta-1]: https://github.com/interfax/interfax-ruby/tree/v1.0.0-beta-1
