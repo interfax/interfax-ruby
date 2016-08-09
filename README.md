@@ -8,7 +8,7 @@ Send and receive faxes in Ruby with the [InterFAX](https://www.interfax.net/en/d
 
 ## Installation
 
-This gem requires 2.1+. You can install install it directly or via bundler.
+This gem requires Ruby 2.1+. You can install install it directly or via bundler.
 
 ```ruby
 gem 'interfax', '~> 1.0.0'
@@ -33,7 +33,7 @@ fax.status # Success if 0. Pending if < 0. Error if > 0
 
 ## Client
 
-The client follows the [12-factor](12factor.net/config) apps principle and can be either set directly or via environment variables.
+The client follows the [12-factor](http://12factor.net/config) apps principle and can be either set directly or via environment variables.
 
 ```ruby
 # Initialize using parameters
