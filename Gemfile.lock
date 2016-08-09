@@ -1,0 +1,35 @@
+PATH
+  remote: .
+  specs:
+    interfax (1.0.0.beta.2)
+      mimemagic (~> 0.3.1)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.4.0)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
+    fakefs (0.9.0)
+    hashdiff (0.3.0)
+    mimemagic (0.3.1)
+    minitest (5.9.0)
+    rake (11.2.2)
+    safe_yaml (1.0.4)
+    webmock (2.1.0)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  fakefs
+  interfax!
+  minitest
+  rake
+  webmock
+
+BUNDLED WITH
+   1.12.5

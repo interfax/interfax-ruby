@@ -1,9 +1,17 @@
-require 'time'
-require "soap/wsdlDriver"
+require 'interfax/version'
+require 'interfax/client'
+require 'interfax/account'
+require 'interfax/object'
+require 'interfax/file'
+require 'interfax/files'
+require 'interfax/forwarding_email'
+require 'interfax/outbound'
+require 'interfax/outbound/fax'
+require 'interfax/outbound/delivery'
+require 'interfax/inbound'
+require 'interfax/inbound/fax'
+require 'interfax/image'
+require 'interfax/document'
+require 'interfax/documents'
 
-$:.unshift(File.dirname(__FILE__)) unless
-  $:.include?(File.dirname(__FILE__)) || $:.include?(File.expand_path(File.dirname(__FILE__)))
-
-require 'interfax/fax_item'
-require 'interfax/base'
-require 'interfax/incoming'
+require 'mimemagic'
