@@ -79,10 +79,9 @@ describe 'InterFAX::Outbound' do
   describe '.cancel' do
     it "should call the client" do
       response = { id: '123' }
-      @client.expect :get, response, ['/outbound/faxes/123/cancel']
+      @client.expect :post, response, ['/outbound/faxes/123/cancel']
       result = @outbound.cancel 123
-      result.must_be_kind_of InterFAX::Outbound::Fax
-      result.id.must_equal '123'
+      result.must_equal true
       @client.verify
     end
   end

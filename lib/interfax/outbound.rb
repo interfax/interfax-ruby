@@ -43,9 +43,8 @@ class InterFAX::Outbound
   end
 
   def cancel fax_id
-    fax = @client.get("/outbound/faxes/#{fax_id}/cancel")
-    fax[:client] = @client
-    InterFAX::Outbound::Fax.new(fax)
+    fax = @client.post("/outbound/faxes/#{fax_id}/cancel")
+    true
   end
 
   def search params = {}

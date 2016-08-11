@@ -161,7 +161,7 @@ interfax.outbound.find(123456)
 
 ----
 
-### Get oubound fax image
+### Get outbound fax image
 
 `interfax.outbound.image(fax_id)`
 
@@ -188,7 +188,7 @@ Cancel a fax in progress.
 
 ```ruby
 interfax.outbound.cancel(123456)
-=> #<InterFAX::Outbound::Fax>
+=> true
 ```
 
 **More:** [documentation](https://www.interfax.net/en/dev/rest/reference/2939)
