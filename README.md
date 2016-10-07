@@ -513,8 +513,18 @@ document.id  # Extracts the ID from the URI (the API does not return the ID)
  1. **Fork** the repo on GitHub
  2. **Clone** the project to your own machine
  3. **Commit** changes to your own branch
- 4. **Push** your work back up to your fork
- 5. Submit a **Pull request** so that we can review your changes
+ 4. **Test** the changes you have made
+ 5. **Push** your work back up to your fork
+ 6. Submit a **Pull request** so that we can review your changes
+
+### Testing
+
+Before submitting a contribution please ensure all tests pass.
+
+```sh
+bundle install # install dependencies
+rake spec # run all tests
+```
 
 ## License
 
