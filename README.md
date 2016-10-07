@@ -39,7 +39,7 @@ The client follows the [12-factor](http://12factor.net/config) apps principle an
 # Initialize using parameters
 interfax = InterFAX::Client.new(username: '...', password: '...')
 
-# Alternatice: Initialize using environment variables
+# Alternative: Initialize using environment variables
 # * INTERFAX_USERNAME
 # * INTERFAX_PASSWORD
 interfax = InterFAX::Client.new
