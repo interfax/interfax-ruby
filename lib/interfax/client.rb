@@ -104,6 +104,8 @@ module InterFAX
       when Net::HTTPSuccess
         if response['location']
           response['location']
+        elsif tiff?(response) || pdf?(response)
+          return [response.body, response['Content-Type']]
         elsif json?(response)
           begin
             JSON.parse(response.body)
@@ -128,11 +130,23 @@ module InterFAX
       end
     end
 
+    def pdf?(response)
+      type?(response, 'application/pdf')
+    end
+
+    def tiff?(response)
+      type?(response, 'image/tiff')
+    end
+
     def json?(response)
+      type?(response, 'text/json')
+    end
+
+    def type?(response, mime_type)
       content_type = response['Content-Type']
-      json_header = content_type && content_type.split(';').first == 'text/json'
+      correct_header = content_type && content_type.split(';').first == mime_type
       has_body = response.body && response.body.length > 0
-      json_header && has_body
+      correct_header && has_body
     end
   end
 end

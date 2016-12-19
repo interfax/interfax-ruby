@@ -38,8 +38,8 @@ class InterFAX::Outbound
   end
 
   def image fax_id
-    data = @client.get("/outbound/faxes/#{fax_id}/image")
-    InterFAX::Image.new(data: data, client: @client)
+    data, mimeType = @client.get("/outbound/faxes/#{fax_id}/image")
+    InterFAX::Image.new(data: data, client: @client, mimeType: mimeType)
   end
 
   def cancel fax_id

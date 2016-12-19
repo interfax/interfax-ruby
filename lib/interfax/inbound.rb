@@ -18,8 +18,8 @@ class InterFAX::Inbound
   end
 
   def image fax_id
-    data = @client.get("/inbound/faxes/#{fax_id}/image")
-    InterFAX::Image.new(data: data, client: @client)
+    data, mimeType = @client.get("/inbound/faxes/#{fax_id}/image")
+    InterFAX::Image.new(data: data, client: @client, mimeType: mimeType)
   end
 
   def mark fax_id, options = {}

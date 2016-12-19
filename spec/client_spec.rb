@@ -76,6 +76,15 @@ describe 'InterFAX::Client' do
       result['balance'].must_equal '123'
     end
 
+    it "should return image data if tiff or pdf" do
+      stub_request(:get, /rest.interfax.net\/outbound\/faxes\/123123\/image/).
+        to_return(:status => 200, :body => 'data', :headers => { 'Content-Type' =>  'application/pdf'})
+
+      result = @client.get('/rest.interfax.net/outbound/faxes/123123/image/')
+      result[0].must_equal 'data'
+      result[1].must_equal 'application/pdf'
+    end
+
     it "should raise on 401" do
       stub_request(:get, /rest.interfax.net\/accounts\/self\/ppcards\/balance/).
         to_return(:status => 401)

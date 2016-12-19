@@ -248,14 +248,14 @@ interfax.inbound.find(123456)
 
 `interfax.inbound.image(fax_id)`
 
-Retrieves a single fax's image.
+Retrieves a single fax's image. This can be a PDF or a TIFF file.
 
 ```ruby
 image = interfax.inbound.image(123456)
 => #<InterFAX::Image>
 image.data
 => # "....binary data...."
-image.save('fax.tiff')
+image.save("path/to/fax.#{image.extension}")
 => # saves image to file
 ```
 

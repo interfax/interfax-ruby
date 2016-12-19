@@ -24,4 +24,17 @@ describe 'InterFAX::Image' do
       FakeFS.deactivate!
     end
   end
+
+  describe '.extension' do
+    it 'should return the correct extension' do
+      @client = Minitest::Mock.new
+      data = '123456789012345678901234567890'
+
+      image = InterFAX::Image.new client: @client, data: data, mimeType: 'application/pdf'
+      image.extension.must_equal 'pdf'
+
+      image = InterFAX::Image.new client: @client, data: data, mimeType: 'image/tiff'
+      image.extension.must_equal 'tiff'
+    end
+  end
 end
