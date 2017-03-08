@@ -76,7 +76,7 @@ There are a few ways to send a fax. One way is to directly provide a file path o
 # with a path
 interfax.outbound.deliver(faxNumber: "+11111111112", file: 'folder/fax.txt')
 # with a URL
-interfax.outbound.deliver(faxNumber: "+11111111112", file: 'https://s3.aws.com/example/fax.pdf')
+interfax.outbound.deliver(faxNumber: "+11111111112", file: 'https://s3.aws.com/example/fax.html')
 ```
 
 InterFAX supports over 20 file types including HTML, PDF, TXT, Word, and many more. For a full list see the [Supported File Types](https://www.interfax.net/en/help/supported_file_types) documentation.
