@@ -31,6 +31,15 @@ describe 'InterFAX::Client' do
         InterFAX::Client.new
       end
     end
+
+    it "should allow for setting a custom hostname" do
+      client = InterFAX::Client.new(
+        username: 'johndoe',
+        password: 'password',
+        host: 'test.example.com'
+      )
+      client.host.must_equal 'test.example.com'
+    end
   end
 
   describe '.deliver' do
@@ -70,6 +79,20 @@ describe 'InterFAX::Client' do
   describe '.get' do
     it "should return the json on success" do
       stub_request(:get, /rest.interfax.net\/accounts\/self\/ppcards\/balance/).
+        to_return(:status => 200, :body => '{"balance" : "123"}', :headers => { 'Content-Type' =>  'text/json'})
+
+      result = @client.get('/accounts/self/ppcards/balance')
+      result['balance'].must_equal '123'
+    end
+
+    it "should use the correct hostname" do
+      @client = InterFAX::Client.new(
+        username: 'johndoe',
+        password: 'password',
+        host: 'test.example.com'
+      )
+
+      stub_request(:get, /test.example.com\/accounts\/self\/ppcards\/balance/).
         to_return(:status => 200, :body => '{"balance" : "123"}', :headers => { 'Content-Type' =>  'text/json'})
 
       result = @client.get('/accounts/self/ppcards/balance')

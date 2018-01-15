@@ -526,6 +526,21 @@ bundle install # install dependencies
 rake spec # run all tests
 ```
 
+### Configuring a custom host
+
+It might be necessary to specifyc a different host for testing purposes. To
+achieve this, specify the `host` parameter or `INTERFAX_HOST` environment
+variable.
+
+
+```ruby
+interfax = InterFAX::Client.new(
+  username: '...',
+  password: '...',
+  host: 'test.domain.com'
+)
+```
+
 ## License
 
 This library is released under the [MIT License](LICENSE).
