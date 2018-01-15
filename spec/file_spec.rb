@@ -15,7 +15,7 @@ describe 'InterFAX::File' do
     it "should process urls" do
       file = InterFAX::File.new(@client, 'http://foobar.com/test.pdf')
       file.header.must_equal 'Content-Location: http://foobar.com/test.pdf'
-      file.body.must_equal nil
+      file.body.must_be_nil
     end
 
     it "should process paths" do
@@ -31,7 +31,7 @@ describe 'InterFAX::File' do
       client = InterFAX::Client.new(username: 'username', password: 'password')
       file = InterFAX::File.new(client, './spec/test.pdf', chunk_size: 5000)
       file.header.must_equal 'Content-Location: http://foobar.com/test.pdf'
-      file.body.must_equal nil
+      file.body.must_be_nil
     end
   end
 end
