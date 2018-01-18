@@ -1,22 +1,24 @@
 PATH
   remote: .
   specs:
-    interfax (1.1.1)
+    interfax (1.2.0)
       mimemagic (~> 0.3.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    addressable (2.4.0)
+    addressable (2.5.2)
+      public_suffix (>= 2.0.2, < 4.0)
     crack (0.4.3)
       safe_yaml (~> 1.0.0)
-    fakefs (0.9.0)
-    hashdiff (0.3.0)
+    fakefs (0.13.0)
+    hashdiff (0.3.7)
     mimemagic (0.3.2)
-    minitest (5.9.0)
-    rake (11.2.2)
+    minitest (5.11.1)
+    public_suffix (3.0.1)
+    rake (12.3.0)
     safe_yaml (1.0.4)
-    webmock (2.1.0)
+    webmock (3.2.1)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff

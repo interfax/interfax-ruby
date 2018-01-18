@@ -9,10 +9,10 @@ module InterFAX
     class BadRequestError < StandardError; end
     class UnauthorizedError < StandardError; end
 
-    attr_accessor :username, :password, :http
+    attr_accessor :username, :password, :http, :host
     attr_writer :outbound, :inbound, :account, :documents, :files
 
-    DOMAIN = "rest.interfax.net".freeze
+    HOST = "rest.interfax.net".freeze
     USER_AGENT = "InterFAX Ruby #{InterFAX::VERSION}".freeze
 
     def initialize(options = {})
@@ -24,7 +24,11 @@ module InterFAX
         ENV['INTERFAX_PASSWORD'] || raise(KeyError, "Missing required argument: password")
       end
 
-      self.http = Net::HTTP.new(DOMAIN, Net::HTTP.https_default_port)
+      self.host = options.fetch(:host) do
+        ENV['INTERFAX_HOST'] || HOST
+      end
+
+      self.http = Net::HTTP.new(host, Net::HTTP.https_default_port)
       http.set_debug_output $stdout if options[:debug]
       http.use_ssl = true
     end
@@ -79,7 +83,7 @@ module InterFAX
 
     def uri_for(path, params = {}, keys = {})
       params = validate(params, keys)
-      uri = URI("https://#{DOMAIN}#{path}")
+      uri = URI("https://#{host}#{path}")
       uri.query = URI.encode_www_form(params)
       uri
     end
