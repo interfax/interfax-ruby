@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.1]
+
+Fix bug in `multipart/mixed` bodies.
+
+Resolve a bug where the `multipart/mixed` boundary and the end of a request body wasn't properly closed.
+
+Upgrading to this version is highly recommended.
+
 ## [1.1.0]
 
 Add PDF support when saving files.
