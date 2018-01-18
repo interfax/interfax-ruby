@@ -13,7 +13,7 @@ describe 'InterFAX::Outbound::Delivery' do
       params == {faxNumber: '11111'} &&
       valid_keys == InterFAX::Outbound::Delivery::VALID_KEYS &&
       headers == InterFAX::Outbound::Delivery::HEADERS &&
-      body.include?(InterFAX::Outbound::Delivery::BOUNDARY)
+      body.include?("--#{InterFAX::Outbound::Delivery::BOUNDARY}--")
     end
     result = @delivery.deliver faxNumber: '11111', file: './spec/test.pdf'
     result.id.must_equal '123'

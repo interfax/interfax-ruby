@@ -47,6 +47,6 @@ class InterFAX::Outbound::Delivery
   def body_for(files)
     files.map do |file|
       "--#{BOUNDARY}\r\n#{file.header}\r\n\r\n#{file.body}\r\n"
-    end.join + "--#{BOUNDARY}\r\n"
+    end.join + "--#{BOUNDARY}--\r\n"
   end
 end

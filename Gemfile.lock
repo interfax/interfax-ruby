@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    interfax (1.1.0)
+    interfax (1.1.1)
       mimemagic (~> 0.3.1)
 
 GEM
@@ -32,4 +32,4 @@ DEPENDENCIES
   webmock
 
 BUNDLED WITH
-   1.13.6
+   1.16.0
