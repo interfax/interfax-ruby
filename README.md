@@ -11,7 +11,7 @@ Send and receive faxes in Ruby with the [InterFAX](https://www.interfax.net/en/d
 This gem requires Ruby 2.1+. You can install install it directly or via bundler.
 
 ```ruby
-gem 'interfax', '~> 1.0.0'
+gem 'interfax'
 ```
 
 ## Getting started
@@ -103,7 +103,7 @@ interfax.outbound.deliver(faxNumber: "+11111111112", file: file)
 To send multiple files just pass in an array strings and [`InterFAX::File`](#interfaxfile) objects.
 
 ```rb
-interfax.outbound.deliver(faxNumber: "+11111111112", files: ['file://fax.pdf', 'https://s3.aws.com/example/fax.pdf'])
+interfax.outbound.deliver(faxNumber: "+11111111112", files: ['file://fax.pdf', 'https://s3.aws.com/example/fax.html'])
 ```
 
 Under the hood every path and string is turned into a  [InterFAX::File](#interfaxfile) object. For more information see [the documentation](#interfaxfile) for this class.
