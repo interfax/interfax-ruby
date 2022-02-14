@@ -1,4 +1,6 @@
-before_install: bundle install
+before_install: 
+  - gem install mimemagic -v '0.3.10' --source
+  - bundle install
 language: ruby
 sudo: false
 cache: bundler
