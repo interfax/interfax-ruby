@@ -1,5 +1,6 @@
 before_install: 
   - gem install racc -v 1.5.2
+  - gem install nokogiri -v 1.9.1
   - gem install mimemagic -v 0.3.8
   - bundle install
 language: ruby
