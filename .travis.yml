@@ -1,5 +1,5 @@
 before_install: 
-  - gem install mimemagic -v 0.3.10 --source
+  - gem install mimemagic -v 0.3.10
   - bundle install
 language: ruby
 sudo: false
