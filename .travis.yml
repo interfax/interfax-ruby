@@ -3,7 +3,7 @@ before_install:
   - gem install nokogiri -v 1.9.1
   - gem install mimemagic -v 0.4.3
   - gem install bundler:2.1.0
-  - bundle upgrade
+  - bundle install
 language: ruby
 sudo: false
 cache: bundler
