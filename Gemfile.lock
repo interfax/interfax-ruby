@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    interfax (1.2.0)
+    interfax (1.2.1)
       mimemagic (~> 0.3.10)
 
 GEM
