@@ -547,4 +547,4 @@ This library is released under the [MIT License](LICENSE).
 
 ## Credits
 
-Many thanks go to [Sascha Brink](https://github.com/sbrink) for building the pre 1.0 version of this gem and supporting it for so many years.
+Many thanks go to [Sascha Brink] (https://github.com/sbrink) for building the pre 1.0 version of this gem and supporting it for so many years.

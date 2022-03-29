@@ -13,5 +13,5 @@ require 'interfax/inbound/fax'
 require 'interfax/image'
 require 'interfax/document'
 require 'interfax/documents'
-
 require 'mimemagic'
+require 'mimemagic/overlay'
